@@ -6,5 +6,38 @@ def create_delivery(state,event):
         'id': event.delivery_id,
         'budget': int(data['budget']),
         'notes': data['notes'],
-        'state': "ready"
+        'status': "ready"
     }
+
+def start_delivery(state,event):
+    return state | {'status': 'started'}
+
+def pickup_delivery(state,event):
+    data = json.loads(event.data)
+    new_budget  = state['budget'] - int(data['purchase_price']) * int(data['quantity'])
+    return state | {
+        'budget': new_budget,
+        "purchase_price": int(data['purchase_price']),
+        "quantity": int(data['quantity']),
+        "status": "collected"
+
+    }
+
+def deliver_products(state,event):
+    data = json.loads(event.data)
+    new_budget  = state['budget'] + int(data['sell_price']) * int(data['quantity'])
+    new_quantity = state['quantity'] - int(data['quantity'])
+    return state | {
+        'budget': new_budget,
+        "sell_price": int(data['sell_price']),
+        "quantity": new_quantity,
+        "status": "completed"
+
+    }
+
+CONSUMERS = {
+    'CREATE_DELIVERY': create_delivery,
+    'START_DELIVERY': start_delivery,
+    'PICKUP_DELIVERY': pickup_delivery,
+    'DELIVER_PRODUCTS': deliver_products
+}
