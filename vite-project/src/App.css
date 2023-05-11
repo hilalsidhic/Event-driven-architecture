@@ -15,12 +15,14 @@
   margin: 1rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
 }
+
 .container{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  
 }
 
 input[type=submit]:hover {
@@ -37,7 +39,7 @@ input, select {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+button[type=submit] {
   width: 100%;
   background-color: #4CAF50;
   color: white;
@@ -54,4 +56,20 @@ input[type=submit] {
 
 .invalid{
   pointer-events: none;
+}
+
+button{
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.header{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding: 1rem;
 }
